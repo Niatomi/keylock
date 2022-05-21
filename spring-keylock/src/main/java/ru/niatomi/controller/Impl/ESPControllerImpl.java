@@ -1,22 +1,21 @@
 package ru.niatomi.controller.Impl;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.niatomi.controller.ESPController;
 import ru.niatomi.model.ActionsHistory;
 import ru.niatomi.service.ESPService;
 
 /**
  * @author niatomi
  */
-@RestController
-@RequestMapping("/esp")
-public class ESPControllerImpl {
+@AllArgsConstructor
+public class ESPControllerImpl implements ESPController {
 
-    @Autowired
-    ESPService service;
+    private final ESPService service;
 
-    @GetMapping
     public ResponseEntity getPasswords() {
         try {
             return ResponseEntity.ok(service.getPasswords());
@@ -25,8 +24,7 @@ public class ESPControllerImpl {
         }
     }
 
-    @PostMapping
-    public void addActions(@RequestBody ActionsHistory actionsHistory) {
+    public void addActions(ActionsHistory actionsHistory) {
         try {
             service.addAction(actionsHistory);
         } catch (Exception e) {
