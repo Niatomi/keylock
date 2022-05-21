@@ -1,0 +1,14 @@
+server:
+  port: ${server_port:8080}
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: client_service
+  main:
+    banner-mode: off
+  profiles:
+    active: test
+  jpa:
+    hibernate:
+      ddl-auto: update
