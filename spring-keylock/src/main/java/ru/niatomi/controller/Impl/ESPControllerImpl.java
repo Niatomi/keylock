@@ -9,6 +9,7 @@ import ru.niatomi.service.Impl.ESPServiceImpl;
 /**
  * @author niatomi
  */
+@RestController
 @AllArgsConstructor
 public class ESPControllerImpl implements ESPController {
 

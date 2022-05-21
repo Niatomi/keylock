@@ -11,6 +11,7 @@ import ru.niatomi.service.Impl.ClientServiceImpl;
 /**
  * @author niatomi
  */
+@RestController
 @AllArgsConstructor
 public class ClientControllerImpl implements ClientController {
 
