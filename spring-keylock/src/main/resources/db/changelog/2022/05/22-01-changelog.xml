@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="create-tables" author="niatomi">
+        <createTable tableName="opener_table">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_opener_table"/>
+            </column>
+            <column name="first_name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="second_name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="third_name" type="VARCHAR(32)"/>
+        </createTable>
+        
+        <createTable tableName="password_table">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_password_table"/>
+            </column>
+            <column name="type" type="VARCHAR(32)"/>
+            <column name="value" type="VARCHAR(32)"/>
+            <column name="opener_id" type="bigint">
+                <constraints nullable="true" unique="false" foreignKeyName="opener_id" referencedTableName="opener_table"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="actions_history_table">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_actions_history_table"/>
+            </column>
+            <column name="action_date" type="date"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="opener_id" type="bigint">
+                <constraints unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-data-into-tables" author="niatomi">
+        <insert tableName="opener_table">
+            <column name="id" value="1"/>
+            <column name="first_name" value="Unexpected"/>
+            <column name="second_name" value="Unexpected"/>
+            <column name="third_name" value="Unexpected"/>
+        </insert>
+        <insert tableName="opener_table">
+            <column name="id" value="2"/>
+            <column name="first_name" value="Олег"/>
+            <column name="second_name" value="Олегов"/>
+            <column name="third_name" value="Олегович"/>
+        </insert>
+        <insert tableName="opener_table">
+            <column name="id" value="3"/>
+            <column name="first_name" value="Роман"/>
+            <column name="second_name" value="Сакутин"/>
+        </insert>
+        <insert tableName="opener_table">
+            <column name="id" value="4"/>
+            <column name="first_name" value="Пицца"/>
+            <column name="second_name" value="Дедов"/>
+        </insert>
+        <insert tableName="opener_table">
+            <column name="id" value="5"/>
+            <column name="first_name" value="Рамзан"/>
+            <column name="second_name" value="Ахматович"/>
+        </insert>
+        <insert tableName="opener_table">
+            <column name="id" value="6"/>
+            <column name="first_name" value="Александр"/>
+            <column name="second_name" value="Александров"/>
+            <column name="third_name" value="Александрович"/>
+        </insert>
+        <insert tableName="opener_table">
+            <column name="id" value="7"/>
+            <column name="first_name" value="Виталий"/>
+            <column name="second_name" value="Кабардинский"/>
+            <column name="third_name" value="Антонович"/>
+        </insert>
+        <insert tableName="opener_table">
+            <column name="id" value="8"/>
+            <column name="first_name" value="Артём"/>
+            <column name="second_name" value="Морозов"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
