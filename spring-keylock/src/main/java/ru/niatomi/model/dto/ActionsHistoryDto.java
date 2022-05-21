@@ -2,16 +2,17 @@ package ru.niatomi.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author niatomi
  */
 @Data
 @AllArgsConstructor
-public class PasswordWithOpenerId {
+@NoArgsConstructor
+public class ActionsHistoryDto {
 
     private Long openerId;
-    private String type;
-    private String value;
+    private String description;
 
 }

@@ -8,8 +8,9 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class Password {
-    private Long id;
+public class PasswordWithOpenerIdDto {
+
+    private Long openerId;
     private String type;
     private String value;
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.niatomi.controller.ESPController;
-import ru.niatomi.model.dto.ActionsHistory;
+import ru.niatomi.model.dto.ActionsHistoryDto;
 import ru.niatomi.service.Impl.ESPServiceImpl;
 
 /**
@@ -24,9 +24,9 @@ public class ESPControllerImpl implements ESPController {
         }
     }
 
-    public void addActions(ActionsHistory actionsHistory) {
+    public void addActions(ActionsHistoryDto actionsHistoryDto) {
         try {
-            service.addAction(actionsHistory);
+            service.addAction(actionsHistoryDto);
         } catch (Exception e) {
             e.printStackTrace();
         }

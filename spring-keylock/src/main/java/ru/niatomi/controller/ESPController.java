@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.niatomi.model.dto.ActionsHistory;
+import ru.niatomi.model.dto.ActionsHistoryDto;
 
 /**
  * @author niatomi
@@ -31,5 +31,5 @@ public interface ESPController {
             @ApiResponse(responseCode = "200", description = "Request is ok.",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
     })
-    void addActions(@RequestBody ActionsHistory actionsHistory);
+    void addActions(@RequestBody ActionsHistoryDto actionsHistoryDto);
 }
