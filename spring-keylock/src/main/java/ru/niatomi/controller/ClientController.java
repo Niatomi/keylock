@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.niatomi.model.domain.OpenerEntity;
 
+import java.util.List;
+
 /**
  * @author niatomi
  */
@@ -54,4 +56,12 @@ public interface ClientController {
     })
     ResponseEntity<Page<OpenerEntity>> getOpenersWithAccess(@PathVariable Integer page,
                                                             @RequestParam(defaultValue = "10") Integer size);
+
+    @GetMapping("/openers")
+    @Operation(description = "Request for get all of the openers.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Request is ok.",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+    })
+    ResponseEntity<List<OpenerEntity>> getOpeners();
 }
