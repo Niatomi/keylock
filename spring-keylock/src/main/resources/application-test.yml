@@ -12,8 +12,8 @@ spring:
     console:
       enabled: true
       path: /h2
-#  liquibase:
-#    changelog: classpath:/db/master-changelog.xml
-#    contexts: test
+  liquibase:
+    changelog: classpath:/db/master-changelog.xml
+    contexts: test
   jpa:
     show-sql: true

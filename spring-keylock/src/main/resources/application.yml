@@ -5,8 +5,6 @@ server:
 spring:
   application:
     name: client_service
-  main:
-    banner-mode: off
   profiles:
     active: test
   jpa:
