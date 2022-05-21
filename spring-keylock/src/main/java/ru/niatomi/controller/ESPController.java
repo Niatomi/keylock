@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.niatomi.model.ActionsHistory;
+import ru.niatomi.model.dto.ActionsHistory;
 
 /**
  * @author niatomi

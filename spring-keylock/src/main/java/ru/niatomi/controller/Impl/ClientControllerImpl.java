@@ -1,17 +1,12 @@
 package ru.niatomi.controller.Impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import ru.niatomi.controller.ClientController;
-import ru.niatomi.entity.OpenerEntity;
+import ru.niatomi.model.domain.OpenerEntity;
 import ru.niatomi.exceptions.OpenerAlreadyExistsException;
-import ru.niatomi.service.ClientService;
+import ru.niatomi.service.Impl.ClientServiceImpl;
 
 /**
  * @author niatomi
@@ -19,11 +14,11 @@ import ru.niatomi.service.ClientService;
 @AllArgsConstructor
 public class ClientControllerImpl implements ClientController {
 
-    private final ClientService clientService;
+    private final ClientServiceImpl clientServiceImpl;
 
     public ResponseEntity<String> create(OpenerEntity openerEntity) {
         try {
-            clientService.create(openerEntity);
+            clientServiceImpl.create(openerEntity);
             return ResponseEntity.ok("User saved");
         } catch (OpenerAlreadyExistsException e) {
             return ResponseEntity.badRequest().body("Error happened");

@@ -1,4 +1,4 @@
-package ru.niatomi.exceptions;
+package ru.niatomi.exceptions.excep;
 
 /**
  * @author niatomi

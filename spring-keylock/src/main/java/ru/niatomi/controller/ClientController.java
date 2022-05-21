@@ -8,9 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.niatomi.entity.OpenerEntity;
-
-import java.awt.print.Pageable;
+import ru.niatomi.model.domain.OpenerEntity;
 
 /**
  * @author niatomi

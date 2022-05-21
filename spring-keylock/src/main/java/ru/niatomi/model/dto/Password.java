@@ -1,12 +1,7 @@
-package ru.niatomi.model;
+package ru.niatomi.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.niatomi.entity.OpenerEntity;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author niatomi

@@ -1,6 +1,6 @@
 package ru.niatomi.exceptions;
 
-import ru.niatomi.entity.OpenerEntity;
+import ru.niatomi.model.domain.OpenerEntity;
 
 /**
  * @author niatomi
