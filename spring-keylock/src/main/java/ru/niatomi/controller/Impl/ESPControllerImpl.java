@@ -2,6 +2,7 @@ package ru.niatomi.controller.Impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 import ru.niatomi.controller.ESPController;
 import ru.niatomi.model.dto.ActionsHistory;
 import ru.niatomi.service.Impl.ESPServiceImpl;
