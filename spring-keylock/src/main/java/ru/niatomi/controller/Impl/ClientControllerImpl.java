@@ -3,10 +3,13 @@ package ru.niatomi.controller.Impl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 import ru.niatomi.controller.ClientController;
 import ru.niatomi.model.domain.OpenerEntity;
 import ru.niatomi.exceptions.OpenerAlreadyExistsException;
 import ru.niatomi.service.Impl.ClientServiceImpl;
+
+import java.util.List;
 
 /**
  * @author niatomi
@@ -38,6 +41,11 @@ public class ClientControllerImpl implements ClientController {
 
     @Override
     public ResponseEntity<Page<OpenerEntity>> getOpenersWithAccess(Integer page, Integer size) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<OpenerEntity>> getOpeners() {
         return null;
     }
 
