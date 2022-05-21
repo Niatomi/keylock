@@ -46,3 +46,4 @@
 
 # Project exclude paths
 /spring-keylock/target/
+/spring-keylock/spring-keylock.iml
