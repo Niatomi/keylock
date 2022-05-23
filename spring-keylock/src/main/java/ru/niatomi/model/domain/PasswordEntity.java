@@ -22,6 +22,8 @@ public class PasswordEntity {
 
     private String type;
 
+    // TODO: transfer this check in Liquibase
+    @Column(unique = true)
     private String value;
 
     @ManyToOne
