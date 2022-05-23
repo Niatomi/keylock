@@ -21,12 +21,8 @@ public class ClientControllerImpl implements ClientController {
     private final ClientServiceImpl clientServiceImpl;
 
     public ResponseEntity<String> create(OpenerEntity openerEntity) {
-        try {
-            clientServiceImpl.create(openerEntity);
-            return ResponseEntity.ok("User saved");
-        } catch (OpenerAlreadyExistsException e) {
-            return ResponseEntity.badRequest().body("Error happened");
-        }
+        clientServiceImpl.create(openerEntity);
+        return ResponseEntity.ok("User saved");
     }
 
     @Override
