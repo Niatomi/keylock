@@ -7,4 +7,5 @@ import ru.niatomi.model.domain.PasswordEntity;
  * @author niatomi
  */
 public interface PasswordRepository extends CrudRepository<PasswordEntity, Long> {
+    PasswordEntity findByValueContainingPassword(String password);
 }
