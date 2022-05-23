@@ -17,15 +17,11 @@ public class ClientServiceImpl {
     public final OpenerRepository openerRepository;
     public final PasswordRepository passwordRepository;
 
-    public OpenerEntity create(OpenerEntity openerEntity) throws OpenerAlreadyExistsException {
+    public OpenerEntity create(OpenerEntity openerEntity) {
+        if (openerRepository.findById(openerEntity.getId()).isPresent()) {
+            throw new OpenerAlreadyExistsException();
+        }
         return openerRepository.save(openerEntity);
+
     }
 }
-
-
-//    public UserEntity registration(UserEntity user) throws UserAlreadyExistsException {
-//        if (userRepo.findByUsername(user.getUsername()) != null) {
-//            throw new UserAlreadyExistsException(user);
-//        }
-//        return userRepo.save(user);
-//    }
