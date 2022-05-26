@@ -46,7 +46,7 @@ public interface ClientController {
             @ApiResponse(responseCode = "400", description = "User already exists"),
             @ApiResponse(responseCode = "406", description = "Validation failed")
     })
-    ResponseEntity<String> update(@RequestBody OpenerEntity openerEntity, @PathVariable Long id);
+    ResponseEntity<String> update(@RequestBody OpenerEntity openerEntity);
 
     @GetMapping("/openersWithAccess/{page}")
     @Operation(description = "Request for get in pages all of the openers.")

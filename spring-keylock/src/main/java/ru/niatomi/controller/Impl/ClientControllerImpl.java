@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.niatomi.controller.ClientController;
 import ru.niatomi.model.domain.OpenerEntity;
-import ru.niatomi.exceptions.OpenerAlreadyExistsException;
 import ru.niatomi.service.Impl.ClientServiceImpl;
 
 import java.util.List;
@@ -18,22 +17,24 @@ import java.util.List;
 @AllArgsConstructor
 public class ClientControllerImpl implements ClientController {
 
-    private final ClientServiceImpl clientServiceImpl;
+    private final ClientServiceImpl service;
 
     public ResponseEntity<String> create(OpenerEntity openerEntity) {
-        clientServiceImpl.create(openerEntity);
+        service.create(openerEntity);
         return ResponseEntity.ok("User saved");
     }
 
     @Override
     public ResponseEntity<String> deleteAccessor(Long id) {
-        return null;
+        return ResponseEntity.ok(service.delete(id));
     }
 
     @Override
-    public ResponseEntity<String> update(OpenerEntity openerEntity, Long id) {
+    public ResponseEntity<String> update(OpenerEntity openerEntity) {
+//        return ResponseEntity.update;
         return null;
     }
+
 
     @Override
     public ResponseEntity<Page<OpenerEntity>> getOpenersWithAccess(Integer page, Integer size) {

@@ -5,7 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.niatomi.controller.ESPController;
 import ru.niatomi.model.dto.ActionsHistoryDto;
+import ru.niatomi.model.dto.PasswordWithOpenerIdDto;
 import ru.niatomi.service.Impl.ESPServiceImpl;
+
+import java.util.List;
 
 /**
  * @author niatomi
@@ -16,12 +19,8 @@ public class ESPControllerImpl implements ESPController {
 
     private final ESPServiceImpl service;
 
-    public ResponseEntity getPasswords() {
-        try {
-            return ResponseEntity.ok(service.getPasswords());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error happened");
-        }
+    public ResponseEntity<List<PasswordWithOpenerIdDto>> getPasswords() {
+        return ResponseEntity.ok(service.getPasswords());
     }
 
     public void addActions(ActionsHistoryDto actionsHistoryDto) {
@@ -30,5 +29,10 @@ public class ESPControllerImpl implements ESPController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void addActionsOfOffline(ActionsHistoryDto actionsHistoryDto) {
+
     }
 }

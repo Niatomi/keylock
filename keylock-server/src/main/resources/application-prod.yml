@@ -1,0 +1,17 @@
+spring:
+  activate:
+    on-profile: prod
+  name: prod
+  h2:
+    console:
+      enabled: false
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/keylock_db
+    username: postgres
+    password: admin
+  liquibase:
+    changelog: classpath:/db/master-changelog.xml
+    contexts: prod
+  jpa:
+    show-sql: false
