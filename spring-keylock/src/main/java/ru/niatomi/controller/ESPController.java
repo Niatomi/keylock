@@ -1,16 +1,11 @@
 package ru.niatomi.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.niatomi.model.dto.ActionsHistoryDto;
-import ru.niatomi.model.dto.PasswordWithOpenerIdDto;
-
-import java.util.List;
+import ru.niatomi.dto.KeylockConfigDto;
+import ru.niatomi.model.ActionsHistory;
+import ru.niatomi.service.ESPService;
 
 /**
  * @author niatomi
@@ -20,19 +15,13 @@ import java.util.List;
 public interface ESPController {
 
     @GetMapping
-    @Operation(description = "Request from ESP for get all passwords with opener containing the password.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Request is ok.",
-                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
-    })
-    ResponseEntity<List<PasswordWithOpenerIdDto>> getPasswords();
+    public ResponseEntity getPasswords();
 
     @PostMapping
-    @Operation(description = "Save action with keylock in DB.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Request is ok.",
-                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
-    })
-    void addActions(@RequestBody ActionsHistoryDto actionsHistoryDto);
-    void addActionsOfOffline(@RequestBody ActionsHistoryDto actionsHistoryDto);
+    void addActions(@RequestBody ActionsHistory actionsHistory);
+
+    @GetMapping("/getConfig")
+    ResponseEntity<KeylockConfigDto> getConfig();
+
+    void setLock();
 }
