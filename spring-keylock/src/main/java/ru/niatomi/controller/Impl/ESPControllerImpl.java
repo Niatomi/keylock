@@ -28,7 +28,7 @@ public class ESPControllerImpl implements ESPController {
     }
 
     @Override
-    public void addActions(@RequestBody ActionsHistory actionsHistory) {
+    public void addActions(ActionsHistory actionsHistory) {
         try {
             service.addAction(actionsHistory);
         } catch (Exception e) {
