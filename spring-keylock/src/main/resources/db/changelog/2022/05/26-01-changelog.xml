@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="create-config" author="niatomi">
+        <createTable tableName="configuration_table">
+            <column name="id" type="int"/>
+            <column name="sound" type="boolean"/>
+            <column name="show_password" type="boolean"/>
+            <column name="re_read_password" type="boolean"/>
+            <column name="lock" type="boolean"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="insert-data-into-config-table" author="niatomi">
+        <insert tableName="configuration_table">
+            <column name="id" value="1"/>
+            <column name="sound" value="1"/>
+            <column name="show_password" value="1"/>
+            <column name="re_read_password" value="1"/>
+            <column name="lock" value="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

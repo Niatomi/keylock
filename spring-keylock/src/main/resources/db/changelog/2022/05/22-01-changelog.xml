@@ -17,6 +17,8 @@
                 <constraints nullable="false"/>
             </column>
             <column name="third_name" type="VARCHAR(32)"/>
+            <column name="sign_up_date" type="datetime"/>
+            <column name="delete_date" type="datetime"/>
         </createTable>
         
         <createTable tableName="password_table">
@@ -48,44 +50,52 @@
             <column name="first_name" value="Unexpected"/>
             <column name="second_name" value="Unexpected"/>
             <column name="third_name" value="Unexpected"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
         <insert tableName="opener_table">
             <column name="id" value="2"/>
             <column name="first_name" value="Олег"/>
             <column name="second_name" value="Олегов"/>
             <column name="third_name" value="Олегович"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
         <insert tableName="opener_table">
             <column name="id" value="3"/>
             <column name="first_name" value="Роман"/>
             <column name="second_name" value="Сакутин"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
         <insert tableName="opener_table">
             <column name="id" value="4"/>
             <column name="first_name" value="Пицца"/>
             <column name="second_name" value="Дедов"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
         <insert tableName="opener_table">
             <column name="id" value="5"/>
             <column name="first_name" value="Рамзан"/>
             <column name="second_name" value="Ахматович"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
         <insert tableName="opener_table">
             <column name="id" value="6"/>
             <column name="first_name" value="Александр"/>
             <column name="second_name" value="Александров"/>
             <column name="third_name" value="Александрович"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
         <insert tableName="opener_table">
             <column name="id" value="7"/>
             <column name="first_name" value="Виталий"/>
             <column name="second_name" value="Кабардинский"/>
             <column name="third_name" value="Антонович"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
         <insert tableName="opener_table">
             <column name="id" value="8"/>
             <column name="first_name" value="Артём"/>
             <column name="second_name" value="Морозов"/>
+            <column name="sign_up_date" valueDate="2014-05-01 23:23:23"/>
         </insert>
 
     </changeSet>

@@ -7,31 +7,19 @@
         <changeSet id="add-values-to-password-table" author="niatomi">
             <insert tableName="password_table">
                 <column name="id" value="1"/>
-                <column name="type" value="keypad"/>
+                <column name="type" value="KEYPAD"/>
                 <column name="value" value="1234"/>
-                <column name="opener_id" value="1"/>
-            </insert>
-            <insert tableName="password_table">
-                <column name="id" value="2"/>
-                <column name="type" value="RFID"/>
-                <column name="value" value="A0 A0 AB FF"/>
-                <column name="opener_id" value="1"/>
-            </insert>
-            <insert tableName="password_table">
-                <column name="id" value="3"/>
-                <column name="type" value="keypad"/>
-                <column name="value" value="4124"/>
                 <column name="opener_id" value="2"/>
             </insert>
             <insert tableName="password_table">
-                <column name="id" value="3"/>
-                <column name="type" value="keypad"/>
+                <column name="id" value="4"/>
+                <column name="type" value="KEYPAD"/>
                 <column name="value" value="1541"/>
                 <column name="opener_id" value="3"/>
             </insert>
             <insert tableName="password_table">
-                <column name="id" value="3"/>
-                <column name="type" value="keypad"/>
+                <column name="id" value="5"/>
+                <column name="type" value="KEYPAD"/>
                 <column name="value" value="642614"/>
                 <column name="opener_id" value="4"/>
             </insert>
