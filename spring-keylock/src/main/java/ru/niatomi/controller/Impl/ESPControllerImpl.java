@@ -1,38 +1,49 @@
 package ru.niatomi.controller.Impl;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.niatomi.controller.ESPController;
-import ru.niatomi.model.dto.ActionsHistoryDto;
-import ru.niatomi.model.dto.PasswordWithOpenerIdDto;
-import ru.niatomi.service.Impl.ESPServiceImpl;
-
-import java.util.List;
+import ru.niatomi.dto.KeylockConfigDto;
+import ru.niatomi.model.ActionsHistory;
+import ru.niatomi.service.ESPService;
 
 /**
  * @author niatomi
  */
 @RestController
-@AllArgsConstructor
+@RequestMapping("/esp")
 public class ESPControllerImpl implements ESPController {
 
-    private final ESPServiceImpl service;
+    @Autowired
+    ESPService service;
 
-    public ResponseEntity<List<PasswordWithOpenerIdDto>> getPasswords() {
-        return ResponseEntity.ok(service.getPasswords());
+    @Override
+    public ResponseEntity getPasswords() {
+        try {
+            return ResponseEntity.ok(service.getPasswords());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error happened");
+        }
     }
 
-    public void addActions(ActionsHistoryDto actionsHistoryDto) {
+    @Override
+    public void addActions(@RequestBody ActionsHistory actionsHistory) {
         try {
-            service.addAction(actionsHistoryDto);
+            service.addAction(actionsHistory);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void addActionsOfOffline(ActionsHistoryDto actionsHistoryDto) {
-
+    public ResponseEntity<KeylockConfigDto> getConfig() {
+        return ResponseEntity.ok(service.getConfig());
     }
+
+    @Override
+    public void setLock() {
+        service.lockConfig();
+    }
+
 }
