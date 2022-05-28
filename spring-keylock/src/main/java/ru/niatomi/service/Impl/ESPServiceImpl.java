@@ -8,6 +8,7 @@ import ru.niatomi.model.dto.PasswordWithOpenerIdDto;
 import ru.niatomi.repository.ActionsHistoryRepository;
 import ru.niatomi.repository.OpenerRepository;
 import ru.niatomi.repository.PasswordRepository;
+import ru.niatomi.service.ESPService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
-public class ESPServiceImpl {
+public class ESPServiceImpl implements ESPService {
 
     public final PasswordRepository passwordRepository;
     public final ActionsHistoryRepository actionsHistoryRepository;

@@ -7,13 +7,14 @@ import ru.niatomi.model.domain.PasswordEntity;
 import ru.niatomi.model.dto.PasswordDto;
 import ru.niatomi.repository.OpenerRepository;
 import ru.niatomi.repository.PasswordRepository;
+import ru.niatomi.service.PasswordService;
 
 /**
  * @author niatomi
  */
 @Service
 @AllArgsConstructor
-public class PasswordServiceImpl {
+public class PasswordServiceImpl implements PasswordService {
 
     private final PasswordRepository passwordRepository;
     private final OpenerRepository openerRepository;

@@ -1,13 +1,14 @@
 package ru.niatomi.controller.Impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.niatomi.controller.ClientController;
-import ru.niatomi.model.domain.OpenerEntity;
+import ru.niatomi.entity.KeylockConfig;
+import ru.niatomi.entity.OpenerEntity;
 import ru.niatomi.exceptions.OpenerAlreadyExistsException;
-import ru.niatomi.service.Impl.ClientServiceImpl;
+import ru.niatomi.service.ClientService;
 
 import java.util.List;
 
@@ -15,34 +16,27 @@ import java.util.List;
  * @author niatomi
  */
 @RestController
+@RequestMapping("/client")
 @AllArgsConstructor
 public class ClientControllerImpl implements ClientController {
 
-    private final ClientServiceImpl clientServiceImpl;
+    private final ClientService clientService;
 
-    public ResponseEntity<String> create(OpenerEntity openerEntity) {
-        clientServiceImpl.create(openerEntity);
+    @Override
+    public ResponseEntity create(OpenerEntity openerEntity) {
+        clientService.create(openerEntity);
         return ResponseEntity.ok("User saved");
     }
 
     @Override
-    public ResponseEntity<String> deleteAccessor(Long id) {
+    public ResponseEntity<String> updateUser() {
         return null;
     }
 
     @Override
-    public ResponseEntity<String> update(OpenerEntity openerEntity, Long id) {
+    public ResponseEntity<List<OpenerEntity>> getAllUsers() {
         return null;
     }
 
-    @Override
-    public ResponseEntity<Page<OpenerEntity>> getOpenersWithAccess(Integer page, Integer size) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<OpenerEntity>> getOpeners() {
-        return null;
-    }
 
 }

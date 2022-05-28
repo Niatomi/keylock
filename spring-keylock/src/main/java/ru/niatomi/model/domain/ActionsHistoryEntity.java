@@ -26,6 +26,6 @@ public class ActionsHistoryEntity {
 
     private String description;
 
-    private String actionDate;
+    private LocalDateTime actionDate;
 
 }

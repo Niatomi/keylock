@@ -1,21 +1,24 @@
 package ru.niatomi.controller.Impl;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.niatomi.controller.ESPController;
-import ru.niatomi.model.dto.ActionsHistoryDto;
-import ru.niatomi.service.Impl.ESPServiceImpl;
+import ru.niatomi.dto.KeylockConfigDto;
+import ru.niatomi.model.ActionsHistory;
+import ru.niatomi.service.ESPService;
 
 /**
  * @author niatomi
  */
 @RestController
-@AllArgsConstructor
-public class ESPControllerImpl implements ESPController {
+@RequestMapping("/esp")
+public class ESPControllerImpl {
 
-    private final ESPServiceImpl service;
+    @Autowired
+    ESPService service;
 
+    @GetMapping
     public ResponseEntity getPasswords() {
         try {
             return ResponseEntity.ok(service.getPasswords());
@@ -24,11 +27,23 @@ public class ESPControllerImpl implements ESPController {
         }
     }
 
-    public void addActions(ActionsHistoryDto actionsHistoryDto) {
+    @PostMapping
+    public void addActions(@RequestBody ActionsHistory actionsHistory) {
         try {
-            service.addAction(actionsHistoryDto);
+            service.addAction(actionsHistory);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    @GetMapping("/getConfig")
+    public ResponseEntity<KeylockConfigDto> getConfig() {
+        return ResponseEntity.ok(service.getConfig());
+    }
+
+    @PostMapping("/setLock")
+    public void setLock() {
+        service.lockConfig();
+    }
+
 }

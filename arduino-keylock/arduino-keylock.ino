@@ -60,11 +60,15 @@ byte unFilledSpace[8]= {
 
 boolean showPassword = true;
 boolean sound = false;
+boolean isLocked = false;
 volatile unsigned long globalTimeBufferMillis = 0;
+
+byte incorrectCount = 0;
 
 void setup(){
 
     Serial.begin(9600);
+    Serial.setTimeout(100);
 
     lcd.init();
     lcd.backlight();
@@ -80,43 +84,26 @@ void setup(){
 
     doorIsOpened();
 
-    attachInterrupt(0, doorAction, CHANGE);
+    attachInterrupt(0, doorInteruptAction, FALLING);
     // openUsingRFID();
 
 
     // sendPasswordOnCheck("1234", "keypad");
   
 }
+boolean isAccessFromPassword = false;
+
+void doorInteruptAction() {
+    detachInterrupt(0);
+    incorrectCount = 6;
+    if (!isAccessFromPassword) Serial.write("hall:UnauthorizedAccess@");
+    Serial.flush();
+
+}
 
 void loop() {
+    attachInterrupt(0, doorInteruptAction, FALLING);
     openMenu();
-    // delay(1000);
-    // Serial.println(mfrc522.PICC_IsNewCardPresent());
-}
-
-void doorAction() {
-    if (digitalRead(HALL)) {
-        Serial.println("Door closed");
-        doorIsOpened();
-    } else {
-        Serial.println("Attention");
-        doorIsOpened();
-    }
-    // waitMicros();
-}
-
-void waitMicros() {
-    for (int i = 0; i < 300; i++) {
-        
-        unsigned int microsTimerBuffer = micros();
-        
-        boolean exitState = true;
-        while (exitState) {
-            if (micros() - microsTimerBuffer > 50000) {
-                exitState = false;
-            }
-        }
-    }
 }
 
 void doorIsOpened() {
@@ -133,8 +120,23 @@ void doorIsOpened() {
 
 
 void openMenu() {
-    drawMenu();
-    listenKeyboardAndChanegeLcd();
+    getConfig();
+    if (!(incorrectCount >= 3) && !isLocked) {
+        drawMenu();
+        listenKeyboardAndChanegeLcd();
+    } else {
+
+        if (isLocked == false) incorrectCount = 0;
+        drawBlock();
+    }
+}
+
+void drawBlock() {
+    lcd.clear();
+    getConfig();
+    lcd.setCursor(0, 0);
+    lcd.print("Access blocked");
+    improvedDelay(10000);
 }
 
 void drawMenuHeader() {
@@ -182,15 +184,63 @@ void ConfigAndRFIDScene() {
     lcd.print("Settings");
 }
 
+boolean isPriorized = false;
+
+void getConfig() {
+
+    Serial.flush();
+    Serial.write("getConfig");
+    Serial.flush();
+
+    long awaitTime = 1000;
+    long enterWithTime = millis();
+    while (true) {
+        
+        if (Serial.available()) {
+            String expression = Serial.readStringUntil('-');
+            expression = expression.substring(expression.indexOf(':') + 1, expression.length());
+            String config = "1";
+            
+            if (!isPriorized && expression.charAt(0) == '1') {
+                sound = true;
+            } else {
+                sound = false;
+            }
+            
+            if (!isPriorized && expression.charAt(1) == '1') {
+                showPassword = true;
+            } else {
+                showPassword = false;
+            }
+            
+            if (expression.charAt(2) == '1') {
+                isLocked = true;
+            } else {
+                isLocked = false;
+            }
+
+            Serial.flush();
+            return;
+        } else if (millis() - enterWithTime > awaitTime) {
+            incorrectCount = 0;
+            drawUpLimitAwaitTime();
+            return;
+        } 
+    }
+    Serial.flush();
+
+}
 
 void listenKeyboardAndChanegeLcd() {
     // drawMenu();
     byte type = 2;
-
+    
     while (true) {
+
         char customKey = customKeypad.getKey();
 
         if (customKey) {
+        getConfig();
         if (sound) tone(ZOOMER, 220, 50);
 
 
@@ -312,6 +362,7 @@ void listenKeyboardOnSettings() {
                 }
                 lcd.setCursor(1, typeSetting);
             } else if (customKey == '5') {
+                isPriorized = true;
                 if (typeSetting == 1) {
                     showPassword = !showPassword;
                     printSuccesSettingsUpdate();
@@ -386,13 +437,14 @@ void openUsingKeypad() {
                 enteringPassword = enteringPassword.substring(0, enteringPassword.length() - 1);
                 drawPassword();
             } else  {
+
                 enteringPassword += customKey;
                 drawPassword();
             }
         }
     }
 
-    applyPassword(sendPasswordOnCheck(enteringPassword, "keypad"));
+    applyPassword(!isLocked && sendPasswordOnCheck(enteringPassword, "keypad"));
 
     enteringPassword = "";
 }
@@ -400,6 +452,7 @@ void openUsingKeypad() {
 
 char constPassword[71]; 
 boolean sendPasswordOnCheck(String enteringPassword, String type) {
+    Serial.flush();
     for (int i = 0; i < sizeof(constPassword); i++) {
         constPassword[i] = '-';
     }
@@ -410,51 +463,83 @@ boolean sendPasswordOnCheck(String enteringPassword, String type) {
         constPassword[i] = sendingData.charAt(i);
     }
     Serial.write(constPassword);
-    // Serial.flush();
-    improvedDelay(300);
+    Serial.flush();
+    improvedDelay(2000);
+    long awaitTime = 10000;
+    long enterWithTime = millis();
     while (true) {
         
         if (Serial.available()) {
-            String isRight = Serial.readStringUntil('-'); 
-            
+            String isRight;
+            isRight = Serial.readStringUntil('*'); 
+            Serial.println();
             Serial.println(isRight);
-
-            if (isRight == "1") {
+            if (isRight.indexOf("open") != -1) {
+                Serial.flush();
                 return true;
-            } else {
+            } else if (isRight.indexOf("wrong") != -1) {
+                Serial.flush();
                 return false;
             }
         }
+
+        if (millis() - enterWithTime > awaitTime) {
+            incorrectCount = 0;
+            drawUpLimitAwaitTime();
+            return false;
+        } 
     }
+
+}
+
+void drawUpLimitAwaitTime() {
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Uptime server limit");
+    improvedDelay(1000);
+    lcd.clear();
+
 }
 
 void applyPassword(boolean passwordIsRight) {
 
     if (passwordIsRight) {
+        isAccessFromPassword = true;
         confirmed();
         detachInterrupt(0);
-        improvedDelay(30000);
-        attachInterrupt(0, doorAction, CHANGE);
+        improvedDelay(10000);
+        checkDoor();
+        attachInterrupt(0, doorInteruptAction, FALLING);
+        isAccessFromPassword = false;
     } else {
         denied();
+        incorrectCount++;
+        if (incorrectCount == 3) {
+            isLocked = true;
+            sendBlockState();
+        } 
     } 
 }
 
-String getPasswords() {
-    Serial.write("getPasswords");
-
-    improvedDelay(2000);
-    Serial.println(Serial.available());
-    String buffer = "-1";
-    
-    if (Serial.available()) {
-        buffer = Serial.readString();
-        Serial.println(buffer);
+boolean checkDoor() {
+    if (!digitalRead(HALL)) {
+        Serial.flush();
+        Serial.write("hall:unClosed@");
+        Serial.flush();
+    } else {
+        Serial.flush();
+        Serial.write("hall:Closed@");
+        Serial.flush();
     }
+    Serial.flush();
+    doorIsOpened();
+}
 
-    Serial.println(buffer);
-
-    return buffer;
+void sendBlockState() {
+    Serial.flush();
+    Serial.write("lock");
+    Serial.flush();
 }
 
 void drawCodeHeader() {
@@ -507,6 +592,7 @@ void confirmSound() {
 void denied() {
     drawIncorrectPassword();
     deniedSound();
+    improvedDelay(500);
 }
 
 void drawIncorrectPassword() {
