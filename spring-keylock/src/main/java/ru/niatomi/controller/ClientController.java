@@ -2,13 +2,12 @@ package ru.niatomi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.niatomi.entity.OpenerEntity;
 import ru.niatomi.exceptions.OpenerAlreadyExistsException;
 import ru.niatomi.service.ClientService;
+
+import java.util.List;
 
 /**
  * @author niatomi
@@ -18,6 +17,14 @@ import ru.niatomi.service.ClientService;
 public interface ClientController {
 
     @PostMapping("/create")
-    public ResponseEntity create(@RequestBody OpenerEntity openerEntity);
+    ResponseEntity<String> create(@RequestBody OpenerEntity openerEntity);
+
+    @PostMapping("/update")
+    ResponseEntity<String> updateUser();
+
+    @GetMapping("/getAllUsers")
+    ResponseEntity<List<OpenerEntity>> getAllUsers();
+
+
 
 }
