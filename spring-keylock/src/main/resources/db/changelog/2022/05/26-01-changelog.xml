@@ -17,9 +17,8 @@
     <changeSet id="insert-data-into-config-table" author="niatomi">
         <insert tableName="configuration_table">
             <column name="id" value="1"/>
-            <column name="sound" value="1"/>
+            <column name="sound" value="0"/>
             <column name="show_password" value="1"/>
-            <column name="re_read_password" value="1"/>
             <column name="lock" value="0"/>
         </insert>
     </changeSet>
