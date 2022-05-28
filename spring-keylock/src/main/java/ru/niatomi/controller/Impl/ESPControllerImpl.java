@@ -13,12 +13,12 @@ import ru.niatomi.service.ESPService;
  */
 @RestController
 @RequestMapping("/esp")
-public class ESPControllerImpl implements ESPController {
+public class ESPControllerImpl {
 
     @Autowired
     ESPService service;
 
-    @Override
+    @GetMapping
     public ResponseEntity getPasswords() {
         try {
             return ResponseEntity.ok(service.getPasswords());
@@ -27,8 +27,8 @@ public class ESPControllerImpl implements ESPController {
         }
     }
 
-    @Override
-    public void addActions(ActionsHistory actionsHistory) {
+    @PostMapping
+    public void addActions(@RequestBody ActionsHistory actionsHistory) {
         try {
             service.addAction(actionsHistory);
         } catch (Exception e) {
@@ -36,12 +36,12 @@ public class ESPControllerImpl implements ESPController {
         }
     }
 
-    @Override
+    @GetMapping("/getConfig")
     public ResponseEntity<KeylockConfigDto> getConfig() {
         return ResponseEntity.ok(service.getConfig());
     }
 
-    @Override
+    @PostMapping("/setLock")
     public void setLock() {
         service.lockConfig();
     }
