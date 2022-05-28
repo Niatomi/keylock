@@ -22,6 +22,5 @@ public class KeylockConfig {
 
     private boolean sound;
     private boolean showPassword;
-    private boolean re_read_password;
     private boolean lock;
 }
