@@ -10,6 +10,8 @@ import ru.niatomi.entity.OpenerEntity;
 import ru.niatomi.exceptions.OpenerAlreadyExistsException;
 import ru.niatomi.service.ClientService;
 
+import java.util.List;
+
 /**
  * @author niatomi
  */
@@ -26,6 +28,15 @@ public class ClientControllerImpl implements ClientController {
         return ResponseEntity.ok("User saved");
     }
 
+    @Override
+    public ResponseEntity<String> updateUser() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<OpenerEntity>> getAllUsers() {
+        return null;
+    }
 
 
 }
