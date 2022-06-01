@@ -1,11 +1,19 @@
 package ru.niatomi.exceptions.excep;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.http.HttpStatus;
+
+import java.time.LocalDateTime;
 
 /**
  * @author niatomi
  */
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExceptionResponse {
-    String exception;
+    LocalDateTime dateStamp;
+    HttpStatus status;
+    String message;
 }
