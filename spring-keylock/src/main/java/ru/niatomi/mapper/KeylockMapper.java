@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 import ru.niatomi.dto.KeylockConfigDto;
-import ru.niatomi.entity.KeylockConfig;
+import ru.niatomi.model.domain.KeylockConfig;
 
 /**
  * @author niatomi

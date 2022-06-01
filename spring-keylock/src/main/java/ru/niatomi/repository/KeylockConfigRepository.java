@@ -1,7 +1,7 @@
 package ru.niatomi.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.niatomi.entity.KeylockConfig;
+import ru.niatomi.model.domain.KeylockConfig;
 
 /**
  * @author niatomi
