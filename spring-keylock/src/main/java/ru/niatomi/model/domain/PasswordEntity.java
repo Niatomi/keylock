@@ -1,15 +1,16 @@
 package ru.niatomi.model.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 
 /**
  * @author niatomi
  */
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,8 +27,9 @@ public class PasswordEntity {
     @Column(unique = true)
     private String value;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "opener_id")
+    @JsonIgnoreProperties("password")
     private OpenerEntity opener;
 
 }
