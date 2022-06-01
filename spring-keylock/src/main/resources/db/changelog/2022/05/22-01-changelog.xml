@@ -34,7 +34,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_actions_history_table"/>
             </column>
-            <column name="action_date" type="date"/>
+            <column name="action_date" type="datetime"/>
             <column name="description" type="varchar(255)"/>
             <column name="opener_id" type="bigint">
                 <constraints unique="false"/>
