@@ -15,7 +15,6 @@ import ru.niatomi.model.domain.KeylockConfig;
     componentModel = "spring",
     unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-
 public interface KeylockMapper {
 
     @Mappings({
