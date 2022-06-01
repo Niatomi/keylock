@@ -1,8 +1,7 @@
 package ru.niatomi.model.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,18 +9,22 @@ import java.util.List;
 /**
  * @author niatomi
  */
-@Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "opener_table")
+@Entity
 public class OpenerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "opener")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "opener", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("opener")
+    @ToString.Exclude
     List<PasswordEntity> passwords;
 
     private String firstName;
