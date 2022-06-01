@@ -1,4 +1,4 @@
-package ru.niatomi.entity;
+package ru.niatomi.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
