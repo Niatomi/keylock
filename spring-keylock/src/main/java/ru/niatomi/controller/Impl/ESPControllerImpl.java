@@ -1,14 +1,13 @@
 package ru.niatomi.controller.Impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.niatomi.controller.ESPController;
 import ru.niatomi.dto.KeylockConfigDto;
 import ru.niatomi.model.dto.ActionsHistoryDto;
 import ru.niatomi.model.dto.PasswordWithOpenerIdDto;
-import ru.niatomi.service.ESPService;
+import ru.niatomi.service.Impl.ESPServiceImpl;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ESPControllerImpl implements ESPController {
 
-    private final ESPService service;
+    private final ESPServiceImpl service;
 
     @Override
     public ResponseEntity<List<PasswordWithOpenerIdDto>> getPasswords() {
