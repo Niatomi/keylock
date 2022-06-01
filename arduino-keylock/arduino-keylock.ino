@@ -1,6 +1,4 @@
-#include <SPI.h>
 #include <Keypad.h>
-#include <MFRC522.h>
 #include <LiquidCrystal_I2C.h>
 
 #define GREEN A0
@@ -10,8 +8,6 @@
 #define SS_PIN A2
 #define RST_PIN A3
 
-// RFID init
-MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 // Keypad init
 const byte ROWS = 3; 
@@ -76,19 +72,12 @@ void setup(){
     lcd.createChar(2,filledSpace);
     lcd.createChar(3,unFilledSpace);
 
-    SPI.begin();
-    mfrc522.PCD_Init();
-
     pinMode(GREEN, OUTPUT);
     pinMode(RED, OUTPUT);
 
     doorIsOpened();
 
     attachInterrupt(0, doorInteruptAction, FALLING);
-    // openUsingRFID();
-
-
-    // sendPasswordOnCheck("1234", "keypad");
   
 }
 boolean isAccessFromPassword = false;
@@ -125,8 +114,8 @@ void openMenu() {
         drawMenu();
         listenKeyboardAndChanegeLcd();
     } else {
-
-        if (isLocked == false) incorrectCount = 0;
+        if (isLocked == false) 
+            incorrectCount = 0;
         drawBlock();
     }
 }
@@ -136,12 +125,12 @@ void drawBlock() {
     getConfig();
     lcd.setCursor(0, 0);
     lcd.print("Access blocked");
-    improvedDelay(10000);
+    improvedDelay(5000);
 }
 
 void drawMenuHeader() {
     lcd.setCursor(0, 0);
-    lcd.print("Choose password type");
+    lcd.print("Choose action");
 
     lcd.setCursor(0, 1);
     for (int i = 0; i < 20; i++) {
@@ -157,12 +146,12 @@ void drawMenuHeader() {
 
 void drawMenu() {
     drawMenuHeader();
-    keyAndRFIDScene();
+    keyAndSettingsScene();
     lcd.setCursor(1, 2);
     lcd.blink_on();
 }
 
-void keyAndRFIDScene() {
+void keyAndSettingsScene() {
     lcd.clear();
     drawMenuHeader();
 
@@ -170,19 +159,10 @@ void keyAndRFIDScene() {
     lcd.print("Keyboard");
 
     lcd.setCursor(2, 3);
-    lcd.print("RFID");
-}
-
-void ConfigAndRFIDScene() {
-    lcd.clear();
-    drawMenuHeader();
-
-    lcd.setCursor(2, 2);
-    lcd.print("RFID");
-
-    lcd.setCursor(2, 3);
     lcd.print("Settings");
 }
+
+
 
 boolean isPriorized = false;
 
@@ -195,7 +175,6 @@ void getConfig() {
     long awaitTime = 1000;
     long enterWithTime = millis();
     while (true) {
-        
         if (Serial.available()) {
             String expression = Serial.readStringUntil('-');
             expression = expression.substring(expression.indexOf(':') + 1, expression.length());
@@ -203,13 +182,13 @@ void getConfig() {
             
             if (!isPriorized && expression.charAt(0) == '1') {
                 sound = true;
-            } else {
+            } else if (!isPriorized && expression.charAt(0) == '0') {
                 sound = false;
             }
             
             if (!isPriorized && expression.charAt(1) == '1') {
                 showPassword = true;
-            } else {
+            } else if (!isPriorized && expression.charAt(1) == '0') {
                 showPassword = false;
             }
             
@@ -232,7 +211,6 @@ void getConfig() {
 }
 
 void listenKeyboardAndChanegeLcd() {
-    // drawMenu();
     byte type = 2;
     
     while (true) {
@@ -246,9 +224,9 @@ void listenKeyboardAndChanegeLcd() {
 
             if (customKey == '2') {
                 if (type == 2) {
-                    type = 4;
+                    type = 3;
                     drawScene(type, false);
-                } else if (type == 4) {
+                } else if (type == 3) {
                     type--;
                     drawScene(type, true);
                 } else {
@@ -262,8 +240,7 @@ void listenKeyboardAndChanegeLcd() {
                     openUsingKeypad();
                     return;
                 } else if (type == 3) {
-                    openUsingRFID();
-                    lcd.blink_on();
+                    openSettings();
                     return;
                 } else if (type == 4) {
                     openSettings();
@@ -271,7 +248,7 @@ void listenKeyboardAndChanegeLcd() {
                 }
             } else if (customKey == '8') {
 
-                if (type == 4) {
+                if (type == 3) {
                     type = 2;
                 } else {
                     type++;
@@ -287,39 +264,6 @@ void listenKeyboardAndChanegeLcd() {
 
 }
 
-void drawRFID() {
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Bring your RFID");
-    lcd.blink_off();
-}
-
-void openUsingRFID() {
-
-    drawRFID();
-
-    while (true) {
-    // Serial.println("buffer");
-
-        while (true) {
-            if ( ! mfrc522.PICC_IsNewCardPresent())
-                break;
-
-            if ( !mfrc522.PICC_ReadCardSerial())
-                break;
-            
-            String buffer = "";
-            for (byte i = 0; i < 4; i++) {
-                buffer += mfrc522.uid.uidByte[i];
-            }
-            applyPassword(sendPasswordOnCheck(buffer, "RFID"));
-            
-            return;
-        }
-    
-    }
-}
 
 
 void openSettings() {
@@ -390,28 +334,23 @@ void printSuccesSettingsUpdate() {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Settings updated");
+    improvedDelay(1000);
 }
 
 void drawScene(byte type, boolean isPrevious) {
     if (type == 2) {
-        keyAndRFIDScene();
+        keyAndSettingsScene();
         lcd.setCursor(1, type);
     } 
 
     if (type == 3) {
-        if (isPrevious) {
-            ConfigAndRFIDScene();
-            lcd.setCursor(1, 2);
-        } else {
-            keyAndRFIDScene();
+        
+            keyAndSettingsScene();
             lcd.setCursor(1, type);
-        }
+
     }
 
-    if (type == 4) {
-        ConfigAndRFIDScene();
-        lcd.setCursor(1, 3);
-    }
+
     
 }
 
