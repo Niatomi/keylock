@@ -21,7 +21,7 @@ public interface ESPController {
     public ResponseEntity<List<PasswordWithOpenerIdDto>> getPasswords();
 
     @PostMapping
-    void addActions(@RequestBody ActionsHistory actionsHistory);
+    void addActions(@RequestBody ActionsHistoryDto actionsHistory);
 
     @GetMapping("/getConfig")
     ResponseEntity<KeylockConfigDto> getConfig();
