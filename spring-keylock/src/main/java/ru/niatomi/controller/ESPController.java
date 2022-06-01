@@ -26,5 +26,6 @@ public interface ESPController {
     @GetMapping("/getConfig")
     ResponseEntity<KeylockConfigDto> getConfig();
 
+    @PostMapping("/setLock")
     void setLock();
 }

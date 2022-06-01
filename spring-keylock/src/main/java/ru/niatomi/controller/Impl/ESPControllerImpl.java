@@ -41,7 +41,8 @@ public class ESPControllerImpl {
         return ResponseEntity.ok(service.getConfig());
     }
 
-    @PostMapping("/setLock")
+
+    @Override
     public void setLock() {
         service.lockConfig();
     }
