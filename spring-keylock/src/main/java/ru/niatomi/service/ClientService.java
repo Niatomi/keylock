@@ -2,6 +2,8 @@ package ru.niatomi.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import ru.niatomi.model.domain.ActionsHistoryEntity;
 import ru.niatomi.model.domain.OpenerEntity;
 import ru.niatomi.model.dto.OpenerDtoWithoutId;
 import ru.niatomi.model.dto.PasswordDtoValueAndType;
@@ -35,5 +37,11 @@ public interface ClientService {
     String blockKeylock();
 
     String addPassword(Long id, PasswordType passwordType, String passwordValue);
+
+    List<ActionsHistoryEntity> getAllHistory();
+
+    Page<ActionsHistoryEntity> getAllHistoryInPages(Integer page,
+                                                    Integer size);
+
 
 }

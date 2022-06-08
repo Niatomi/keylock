@@ -1,6 +1,7 @@
 package ru.niatomi.service.Impl;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -11,11 +12,13 @@ import ru.niatomi.exceptions.excep.OpenerNotFoundException;
 import ru.niatomi.exceptions.excep.PasswordIsNotUniqueException;
 import ru.niatomi.mapper.OpenerMapper;
 import ru.niatomi.mapper.PasswordMapper;
+import ru.niatomi.model.domain.ActionsHistoryEntity;
 import ru.niatomi.model.domain.KeylockConfig;
 import ru.niatomi.model.domain.OpenerEntity;
 import ru.niatomi.model.domain.PasswordEntity;
 import ru.niatomi.model.dto.OpenerDtoWithoutId;
 import ru.niatomi.model.enumarations.PasswordType;
+import ru.niatomi.repository.ActionsHistoryRepository;
 import ru.niatomi.repository.KeylockConfigRepository;
 import ru.niatomi.repository.OpenerRepository;
 import ru.niatomi.repository.PasswordRepository;
@@ -36,6 +39,7 @@ public class ClientServiceImpl implements ClientService {
     private final OpenerRepository openerRepository;
     private final KeylockConfigRepository keylockConfigRepository;
     private final PasswordRepository passwordRepository;
+    private final ActionsHistoryRepository actionsHistoryRepository;
 
     private final OpenerMapper openerMapper;
     private final PasswordMapper passwordMapper;
@@ -172,5 +176,21 @@ public class ClientServiceImpl implements ClientService {
         openerRepository.save(opener);
 
         return "Add password for opener with id=" + id;
+    }
+
+    @Override
+    public List<ActionsHistoryEntity> getAllHistory() {
+        List<ActionsHistoryEntity> list = new LinkedList<>();
+        actionsHistoryRepository.findAll().forEach(actionsHistoryEntity -> list.add(actionsHistoryEntity));
+        return list;
+    }
+
+    @Override
+    public Page<ActionsHistoryEntity> getAllHistoryInPages(Integer page,
+                                                           Integer size) {
+        Sort sort = Sort.by(Sort.Order.asc("id"));
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        Page<ActionsHistoryEntity> all = actionsHistoryRepository.findAll(pageRequest);
+        return all;
     }
 }

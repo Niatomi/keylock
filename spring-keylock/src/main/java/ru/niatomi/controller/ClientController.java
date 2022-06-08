@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.niatomi.model.domain.ActionsHistoryEntity;
 import ru.niatomi.model.domain.OpenerEntity;
 import ru.niatomi.model.dto.OpenerDtoWithoutId;
 import ru.niatomi.model.dto.PasswordDtoValueAndType;
@@ -121,5 +122,22 @@ public interface ClientController {
                     content = {@Content(mediaType = MediaType.TEXT_PLAIN_VALUE)}),
     })
     ResponseEntity<String> blockKeylock();
+
+    @GetMapping("/getHistory")
+    @Operation(description = "Request for getting all history as list")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Request is ok.",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+    })
+    ResponseEntity<List<ActionsHistoryEntity>> getAllHistory();
+
+    @GetMapping("/getHistoryInPages")
+    @Operation(description = "Request for getting all history as pageable")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Request is ok.",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+    })
+    ResponseEntity<Page<ActionsHistoryEntity>> getAllHistoryInPages(@RequestParam(defaultValue = "0") Integer page,
+                                                                    @RequestParam(defaultValue = "10") Integer size);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.niatomi.controller.ClientController;
 import ru.niatomi.controller.ESPController;
+import ru.niatomi.model.domain.ActionsHistoryEntity;
 import ru.niatomi.model.domain.OpenerEntity;
 import ru.niatomi.model.domain.PasswordEntity;
 import ru.niatomi.model.dto.OpenerDtoWithoutId;
@@ -88,6 +89,17 @@ public class ClientControllerImpl implements ClientController {
     @Override
     public ResponseEntity<String> blockKeylock() {
         return ResponseEntity.ok(service.blockKeylock());
+    }
+
+    @Override
+    public ResponseEntity<List<ActionsHistoryEntity>> getAllHistory() {
+        return ResponseEntity.ok(service.getAllHistory());
+    }
+
+    @Override
+    public ResponseEntity<Page<ActionsHistoryEntity>> getAllHistoryInPages(Integer page,
+                                                                           Integer size) {
+        return ResponseEntity.ok(service.getAllHistoryInPages(page, size));
     }
 
 }
