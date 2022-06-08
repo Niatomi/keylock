@@ -1,4 +1,4 @@
-package ru.niatomi.exceptions;
+package ru.niatomi.exceptions.excep;
 
 import ru.niatomi.model.domain.OpenerEntity;
 
